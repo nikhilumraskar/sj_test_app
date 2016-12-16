@@ -1,0 +1,19 @@
+<div class="form-group">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<br>
+				<br>
+				<form name="loginForm" novalidate>
+					<div ng-show="loginFailture.flag == 0" class="alert alert-danger" role="alert">{{loginFailture.msg}}</div>
+					<input type="text" ng-model="user_name" name="user_name" class="input-lg form-control" placeholder="Username" required>
+					<span class="label label-danger" ng-show="loginForm.user_name.$error.required">Username is required.</span>
+					
+					<input type="password" ng-model="password" name="password" class="input-lg form-control" placeholder="Password" required>
+					<span class="label label-danger" ng-show="loginForm.password.$error.required">Password is required.</span>
+					<button type="button" ng-disabled="loginForm.user_name.$error.required || loginForm.password.$error.required" ng-click="login()" class="btn btn-block btn-lg btn-info">Sign in</button>
+				</form>
+			</div>		
+		</div>
+	</div>
+</div>

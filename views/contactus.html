@@ -1,0 +1,53 @@
+<div class="container">
+	<div class="col-md-5">
+		<div class="form-group col-md-12">
+			<button class="btn btn-default" ng-click="newQuery()">create new Query</button>
+			<br>
+			<br>
+			<table class="table">
+				<tbody>
+					<tr ng-repeat='query in allQueries'>
+						  	<td>
+								{{query.title}}
+								<button type="button" class="btn btn-default pull-right" ng-click="view($index)">View</button>
+							</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-md-5" style="background-color: #cee3ff;height: 80%; overflow: auto;" ng-show="queryForm">
+		<br>
+		<button class="btn btn-danger pull-right" ng-click='queryForm = false'>x</button>
+		<br>
+		<label>Title</label>&nbsp
+			<input type="text" class="form-control" ng-model='queryTitle'>
+		<br>
+		<label>Query</label>&nbsp
+		<textarea class="form-control" ng-model='queryText'>
+		</textarea>
+		<br>
+		<button class="btn btn-default" ng-disabled='queryTitle==""||queryText==""' ng-click="sendQuery()">send</button>
+
+	</div>
+	<div class="col-md-5" style="background-color: #cee3ff;height: 80%; overflow: auto;" ng-show="detailview">
+		<br>
+		<button class="btn btn-danger pull-right" ng-click='detailview = false'>x</button>
+		<br>
+		<h3>{{viewQuery.title}}</h3>
+		<br>
+		<label>Query</label>&nbsp
+		<div class="panel panel-default">
+		  <div class="panel-body">
+		    {{viewQuery.query_text}}
+		  </div>
+		</div>
+		<br>
+		<div ng-if='viewQuery.reply_flag == 1' class="panel panel-default">
+		  <div class="panel-body">
+		    {{viewQuery.reply_text}}
+		  </div>
+		</div>
+
+	</div>
+</div>

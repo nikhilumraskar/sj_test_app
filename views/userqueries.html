@@ -1,0 +1,45 @@
+<div class="container">
+	<div class="col-md-5">
+		<div class="form-group col-md-12">
+			<table class="table">
+				<thead>
+					<tr>
+						<td>Users</td>
+						<td>Title</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat='query in allQueries'>
+						<td>{{query.username}}</td>
+					  	<td>
+							{{query.title}}
+							<button type="button" class="btn btn-default pull-right" ng-click="view($index)">View</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-md-5" style="background-color: #cee3ff;height: 80%; overflow: auto;" ng-show="detailview">
+		<br>
+		<button class="btn btn-danger pull-right" ng-click='detailview = false'>x</button>
+		<h3>{{viewQuery.title}}</h3>
+		<br>
+		<label>Query</label>&nbsp
+		<div class="well">
+		    {{viewQuery.query_text}}
+		</div>
+		<br>
+		<label>Reply</label>&nbsp
+		<div ng-show='viewQuery.reply_flag == 1' class="well">
+		  
+		    {{viewQuery.reply_text}}
+		</div>
+		<div ng-show='viewQuery.reply_flag == 0'>
+			<textarea class="form-control" ng-model='replyText'>
+			</textarea>
+			<br>
+			<button class="btn btn-default" ng-disabled='replyText==""||replyText==""' ng-click="sendReply(viewQuery.contact_id)">send</button>
+		</div>
+	</div>
+</div>

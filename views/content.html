@@ -1,0 +1,109 @@
+<div class="container">
+	<div class="col-md-5">
+		<div class="form-group col-md-12">
+			<button ng-if='userDetails.user_role == "admin"' class="btn btn-success" ng-click="edit()">create new content</button>
+			<div class="col-md-7 pull-right">
+				<input type="text" class="form-control" ng-model='search.content_title' placeholder="Search for listed contents">
+			</div>
+			<br>
+			<br>
+			<table class="table">
+				<tbody>
+					<tr  ng-repeat='content in allContents | filter:search '>
+						<td>
+							{{content.content_title}}
+							<button type="button" class="btn btn-default pull-right" ng-click="view($index)">View</button>
+							<div ng-if='userDetails.user_role == "admin"' class="btn-group pull-right" role="group" aria-label="Default button group">
+								<button type="button" class="btn btn-default" ng-click='edit($index)'>Edit</button>
+								<button type="button" class="btn btn-default" ng-click='deleteContent($index)'>
+									Delete
+								</button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-md-6" style="background-color: #eef996;height: 80%; overflow: auto;" ng-show="detailView">
+	<br>
+		<button class="btn btn-danger pull-right" ng-click='detailView = false'>x</button>
+		<h2>{{viewContent.content_title}}</h2>
+
+		<div class="panel panel-default">
+		  <div class="panel-body">
+		    {{textArea}}
+		  </div>
+		</div>
+		<center>
+		<label>Page</label>
+		<div class="btn-group btn-group-lg" role="group" >
+			<button type="button" class="btn btn-default" ng-click='textArea = viewContent.content_page_1'>
+				1
+			</button>
+			<button type="button" class="btn btn-default" ng-click='textArea = viewContent.content_page_2'>
+				2
+			</button>
+			<button type="button" class="btn btn-default" ng-click='textArea = viewContent.content_page_3'>
+				3
+			</button>
+		</div>
+		<br>
+		</center>
+		<h4>Comments</h4>
+		<textarea class="form-control" ng-model="userComment" placeholder="Share your comments"></textarea>
+		<br>
+		<div id="captchaDiv">
+
+		</div>
+		<br>
+		<button class="btn btn-primary" ng-click="postComment(viewContent.content_id)" ng-disabled='userComment==""||userComment==undefined'>Post</button>
+		<br>
+		<br>
+		<div class="well" ng-repeat='comment in contentsComments'>
+			<label>{{comment.username}}</label> says {{comment.comment_text}}
+			<button ng-show='userDetails.user_role == "admin"' class="btn btn-default pull-right" ng-click='deleteComment($index)'>
+				delete
+			</button><br>
+		</div>
+
+	</div>
+	<div class="col-md-6" style="background-color: #eef996;height: 80%; overflow: auto;" ng-show="editView">
+	<br>
+		<button class="btn btn-danger pull-right" ng-click='editView = false'>x</button>
+		<div class="form-group col-md-4">
+			<label>Title</label>&nbsp
+			<input type="text" class="form-control" ng-model='editContent.content_title'>
+		</div>
+		<div class="form-group col-md-5">
+			<label>Schedule date</label>&nbsp
+			<input type="date" class="form-control" ng-model='editContent.schedule_date_tag' ng-change='dateValidate()'>
+		</div>
+		<br>
+		<textarea ng-show="textAreaVisible == 1" class="form-control" ng-model='editContent.content_page_1'>
+		</textarea>
+		<textarea ng-show="textAreaVisible == 2" class="form-control" ng-model='editContent.content_page_2'>
+		</textarea>
+		<textarea ng-show="textAreaVisible == 3" class="form-control" ng-model='editContent.content_page_3'>
+		</textarea>
+		<br>
+		<center>
+		<label>Page</label>
+		<div class="btn-group btn-group-lg" role="group" >
+			<button type="button" class="btn btn-default" ng-click='textAreaVisible = 1'>
+				1
+			</button>
+			<button type="button" class="btn btn-default" ng-click='textAreaVisible = 2'>
+				2
+			</button>
+			<button type="button" class="btn btn-default" ng-click='textAreaVisible = 3'>
+				3
+			</button>
+		</div><br><br>
+		<button class="btn btn-info" ng-click='saveContent()' ng-disabled = 'editContent.content_title == "" ||editContent.schedule_date_tag == null || ( editContent.content_page_1 == "" &&  editContent.content_page_2 == "" && editContent.content_page_3 == "")'>
+			publish
+		</button>
+		</center>
+
+	</div>
+</div>
